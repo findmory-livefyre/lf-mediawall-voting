@@ -3,6 +3,7 @@
 	<head>
 		<!-- Livefyre.js ; script loader to rule them all -->
 		<script src='http://cdn.livefyre.com/Livefyre.js'></script>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 		<!-- add Client Solutions network LFEP -->
 		<script src="http://client-solutions.ep.livefyre.com/media/Y2xpZW50LXNvbHV0aW9ucy5lcC5saXZlZnlyZS5jb20=/javascripts/customprofiles.js">
@@ -10,7 +11,11 @@
 			
 	</head>
 	<body>
+		<h1>The higest rated Dingo is...</h1>
+		<div id="highest"></div>
+		<h1>Vote for your favorite Dingo</h1>
 		<button id="auth-button">Log in</button>
+		<div id="editor"></div>
 		<div id="wall"></div>
 		<script>
 
@@ -34,11 +39,11 @@
 			});
 
 			Livefyre.require([
-			    'streamhub-wall#3','streamhub-sdk#2','stream#0.2.2'],
-			function (LiveMediaWall,SDK,Stream) {
+			    'streamhub-wall#3','streamhub-sdk#2','stream#0.2.2', 'streamhub-input#0.3'],
+			function (LiveMediaWall,SDK,Stream, Input) {
 
 				var collection = new SDK.Collection({
-				    "articleId": "13", 
+				    "articleId": "ory-1409851747000", 
 				    "siteId": 333682, 
 				    "network": "client-solutions.fyre.co"
 				});
@@ -47,6 +52,13 @@
 			        el: document.getElementById("wall"),
 			        postButton: true
 			    });
+
+			    var contentEditor = new (Input.ContentEditor)({
+					el: document.getElementById('editor'),
+					mediaEnabled: true
+			    });
+			    contentEditor.render();
+			    contentEditor.pipe(collection);
 
 			    function itemsWithImages(){
 			        var customTransform = new Stream.Transform({});
@@ -67,7 +79,40 @@
 
 			    collection.createUpdater().pipe(itemsWithImages()).pipe(wall);
 			    collection.createArchive().pipe(itemsWithImages()).pipe(wall.more);
+
+			    $("textarea").attr("placeholder", "Click the camera icon below to upload your images");
+			    $(".lf-content-editor-post").html('Upload Image')
 			});		               
 		</script>
+
+
+		<style>
+			[data-lf-package~="streamhub-wall#3.1.1"] .content .content-footer .hub-content-like {
+				padding-left: 23px;
+				background-image: url("vote.png");
+				width:20px;
+				text-align: right;
+				background-repeat: no-repeat;
+				background-position: 0 center;
+				color: #6d7179;
+		        background-color: #f5f5f5;
+		        border-color: #d5d6d9;
+		        -webkit-box-shadow: 0 1px 2px rgba(47,52,64,.15);
+		        -moz-box-shadow: 0 1px 2px rgba(47,52,64,.15);
+		        -ms-box-shadow: 0 1px 2px rgba(47,52,64,.15);
+		        -o-box-shadow: 0 1px 2px rgba(47,52,64,.15);
+		        box-shadow: 0 1px 2px rgba(47,52,64,.15)
+			}
+
+			h1 {
+				text-align: center;
+				font-family: sans-serif;
+			}
+			.content-body-main{
+				display:none;
+			}
+
+
+		</style>
 	</body>
 </html>
