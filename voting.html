@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- Livefyre.js ; script loader to rule them all -->
+		<script src='http://cdn.livefyre.com/Livefyre.js'></script>
+
+		<!-- add Client Solutions network LFEP -->
+		<script src="http://client-solutions.ep.livefyre.com/media/Y2xpZW50LXNvbHV0aW9ucy5lcC5saXZlZnlyZS5jb20=/javascripts/customprofiles.js">
+		</script>
+			
+	</head>
+	<body>
+		<button id="auth-button">Log in</button>
+		<div id="wall"></div>
+		<script>
+
+			Livefyre.require(['auth', 'lfep-auth-delegate#0', 'auth-contrib#0.0.0'], function(auth, LFEPDelegate, authContrib) {
+				// Wire up LFEP to AppKit Auth
+			    auth.delegate(new LFEPDelegate({
+			        engageOpts: {
+			            app: 'client-solutions'  //.auth.fyre.co
+			        }
+			    }));
+				// And render the auth log and auth button
+				//var authLog = authContrib.createLog(auth, document.getElementById('log'));
+				// 
+				authContrib.createButton(auth, document.getElementById('auth-button'));
+
+    			var user = auth.get('livefyre');
+    			if (user) {
+  					console.log("You user token is: ", user.get('token'));
+       				prompt('Your token is',user.get('token'));          
+    			}
+			});
+
+			Livefyre.require([
+			    'streamhub-wall#3','streamhub-sdk#2','stream#0.2.2'],
+			function (LiveMediaWall,SDK,Stream) {
+
+				var collection = new SDK.Collection({
+				    "articleId": "13", 
+				    "siteId": 333682, 
+				    "network": "client-solutions.fyre.co"
+				});
+			   
+			    var wall = window.wall = new LiveMediaWall({
+			        el: document.getElementById("wall"),
+			        postButton: true
+			    });
+
+			    function itemsWithImages(){
+			        var customTransform = new Stream.Transform({});
+			        customTransform._transform = function(content, done){
+			            if (content.attachments.length == 0){
+			                done();
+			            }else{
+			                //TODO: attachment might be in array item > 0      
+			                if (content.attachments[0].type === "photo" || content.attachments[0].type === "video"){
+			                        return done(null, content);
+			                }
+			                done();
+			            }
+			    
+			        };
+			        return customTransform;
+			    };
+
+			    collection.createUpdater().pipe(itemsWithImages()).pipe(wall);
+			    collection.createArchive().pipe(itemsWithImages()).pipe(wall.more);
+			});		               
+		</script>
+	</body>
+</html>
