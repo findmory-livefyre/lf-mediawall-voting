@@ -3,7 +3,6 @@
 	<head>
 		<!-- Livefyre.js ; script loader to rule them all -->
 		<script src='http://cdn.livefyre.com/Livefyre.js'></script>
-		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 		<!-- add Client Solutions network LFEP -->
 		<script src="http://client-solutions.ep.livefyre.com/media/Y2xpZW50LXNvbHV0aW9ucy5lcC5saXZlZnlyZS5jb20=/javascripts/customprofiles.js">
@@ -15,7 +14,7 @@
 		<div id="highest"></div>
 		<h1>Vote for your favorite Dingo</h1>
 		<button id="auth-button">Log in</button>
-		<div id="editor"></div>
+		<div id="upload-button"></div>
 		<div id="wall"></div>
 		<script>
 
@@ -53,12 +52,11 @@
 			        postButton: true
 			    });
 
-			    var contentEditor = new (Input.ContentEditor)({
-					el: document.getElementById('editor'),
-					mediaEnabled: true
-			    });
-			    contentEditor.render();
-			    contentEditor.pipe(collection);
+			    var uploadButton = new (Input.UploadButton)({
+		        	el: document.getElementById('upload-button')
+		      	})
+		      	uploadButton.render();
+		      	uploadButton.pipe(collection);
 
 			    function itemsWithImages(){
 			        var customTransform = new Stream.Transform({});
@@ -79,9 +77,6 @@
 
 			    collection.createUpdater().pipe(itemsWithImages()).pipe(wall);
 			    collection.createArchive().pipe(itemsWithImages()).pipe(wall.more);
-
-			    $("textarea").attr("placeholder", "Click the camera icon below to upload your images");
-			    $(".lf-content-editor-post").html('Upload Image')
 			});		               
 		</script>
 
