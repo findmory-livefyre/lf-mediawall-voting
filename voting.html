@@ -3,6 +3,7 @@
 	<head>
 		<!-- Livefyre.js ; script loader to rule them all -->
 		<script src='http://cdn.livefyre.com/Livefyre.js'></script>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 		<!-- add Client Solutions network LFEP -->
 		<script src="http://client-solutions.ep.livefyre.com/media/Y2xpZW50LXNvbHV0aW9ucy5lcC5saXZlZnlyZS5jb20=/javascripts/customprofiles.js">
@@ -10,8 +11,10 @@
 			
 	</head>
 	<body>
-		<h1>The higest rated Dingo is...</h1>
-		<div id="highest"></div>
+		<h1>The highest rated Dingo is...</h1>
+		<div id="container" >
+			<div id="highest"></div>
+		</div>
 		<h1>Vote for your favorite Dingo</h1>
 		<button id="auth-button">Log in</button>
 		<div id="upload-button"></div>
@@ -40,6 +43,7 @@
 			Livefyre.require([
 			    'streamhub-wall#3','streamhub-sdk#2','stream#0.2.2', 'streamhub-input#0.3'],
 			function (LiveMediaWall,SDK,Stream, Input) {
+				//console.log(HTTP);
 
 				var collection = new SDK.Collection({
 				    "articleId": "ory-1409851747000", 
@@ -58,6 +62,26 @@
 		      	uploadButton.render();
 		      	uploadButton.pipe(collection);
 
+
+	      		//get the most upvoted item
+	      		var higestRated = new LiveMediaWall({
+	      		    el:document.getElementById('highest'),
+	      		    columns:1
+	      		});
+
+	      		//get most liked content from bootstrap
+	      		// and turn it into a Stream.Readable
+
+	      	 	var content = {};
+
+	      		$.get( "https://client-solutions.bootstrap.fyre.co/api/v3.0/site/333682/article/b3J5LTE0MDk4NTE3NDcwMDA=/top/likes/", function( response ) {
+	      			console.log(response.data.content[0]);
+	      			content = new SDK.Content(response.data.content[0].content);
+	      			higestRated.write(content);
+	      		});
+
+
+	      		//only show images
 			    function itemsWithImages(){
 			        var customTransform = new Stream.Transform({});
 			        customTransform._transform = function(content, done){
@@ -78,6 +102,11 @@
 			    collection.createUpdater().pipe(itemsWithImages()).pipe(wall);
 			    collection.createArchive().pipe(itemsWithImages()).pipe(wall.more);
 			});		               
+
+			
+
+			
+
 		</script>
 
 
@@ -106,7 +135,10 @@
 			.content-body-main{
 				display:none;
 			}
-
+			#container {
+				width:25%;
+				margin:auto;
+			}
 
 		</style>
 	</body>
