@@ -69,14 +69,32 @@
 	      		    columns:1
 	      		});
 
+	      		var mostLiked = function(thedata){
+	      			var highest = {};
+	      			//set item 0
+	      			highest.count = thedata.content[0].content.annotations.likedBy.length;
+	      			highest.item = 0;
+	      			//replace it if item i has a bigger number of likes
+	      			for (var i = 1; i < thedata.content.length; i++) { 
+	      				if (thedata.content[i].content.annotations.likedBy.length > highest.count){
+	      					highest.count = thedata.content[i].content.annotations.likedBy.length;
+	      					highest.item = i;
+	      				}
+	      			}
+	      			//return the highest item
+	      			return highest.item;
+	      		};
+
 	      		//get most liked content from bootstrap
 	      		// and turn it into a Stream.Readable
 
 	      	 	var content = {};
 
 	      		$.get( "https://client-solutions.bootstrap.fyre.co/api/v3.0/site/333682/article/b3J5LTE0MDk4NTE3NDcwMDA=/top/likes/", function( response ) {
-	      			console.log(response.data.content[0]);
-	      			content = new SDK.Content(response.data.content[0].content);
+	      			//console.log(response.data.content[0]);
+	      			//window.thedata = response.data;
+	      			//console.log(response.data);
+	      			content = new SDK.Content(response.data.content[mostLiked(response.data)].content);
 	      			higestRated.write(content);
 	      		});
 
@@ -102,10 +120,6 @@
 			    collection.createUpdater().pipe(itemsWithImages()).pipe(wall);
 			    collection.createArchive().pipe(itemsWithImages()).pipe(wall.more);
 			});		               
-
-			
-
-			
 
 		</script>
 
