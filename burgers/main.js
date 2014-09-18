@@ -105,13 +105,36 @@
 }(Livefyre));
 
 $(function () {
-  $("#mediawall-highest").stick_in_parent().on("sticky_kit:stick", function(e) {
-    var $el = $(e.target);
-    console.log("has stuck!", e.target);
-    $el.parent().css({
-      'position': 'fixed',
-      'top': 360
-    });
+  var $wrapperEl = $("#mediawalls");
+  var $highEl = $("#mediawall-highest", $wrapperEl);
+  var $highElOffset = $highEl.offset().top;
+  var $contestEl = $("#mediawall-contestants", $wrapperEl);
 
+  function checkPosY() {
+    if ($(window).scrollTop() > $highElOffset) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  $(window).on('scroll', function (e) {
+    if(checkPosY()) {
+      console.log('stuck');
+      $wrapperEl.addClass('stuck');
+    } else {
+      console.log('unstuck');
+      $wrapperEl.removeClass('stuck');
+    }
   });
+
+  // $("#mediawall-highest").stick_in_parent().on("sticky_kit:stick", function(e) {
+  //   var $el = $(e.target);
+  //   console.log("has stuck!", e.target);
+  //   $el.parent().css({
+  //     'position': 'fixed',
+  //     'top': 360
+  //   });
+
+  // });
 }());

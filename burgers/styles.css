@@ -1,3 +1,21 @@
+/*
+*  html5 doctor css reset | http://html5doctor.com/html-5-reset-stylesheet
+*/
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}
+body{line-height:1}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}
+nav ul{list-style:none}
+blockquote,q{quotes:none}
+blockquote:before,blockquote:after,q:before,q:after{content:none}
+a{margin:0;padding:0;font-size:100%;vertical-align:baseline;background:transparent}
+ins{background-color:#ff9;color:#000;text-decoration:none}
+mark{background-color:#ff9;color:#000;font-style:italic;font-weight:bold}
+del{text-decoration:line-through}
+abbr[title],dfn[title]{border-bottom:1px dotted;cursor:help}
+table{border-collapse:collapse;border-spacing:0}
+hr{display:block;height:1px;border:0;border-top:1px solid #ccc;margin:1em 0;padding:0}
+input,select{vertical-align:middle}
+
 [data-lf-package~="streamhub-wall#3.1.1"] .content .content-footer .hub-content-like {
   padding-left: 23px;
   background-image: url("vote.png");
@@ -25,9 +43,8 @@ h1 {
   display:none;
 }
 
-#container {
-  width:25%;
-  margin:auto;
+[data-lf-package~="streamhub-wall#3.1.5"] .hub-list article.content {
+  border-radius: 0;
 }
 
 #header-placeholder {
@@ -41,20 +58,52 @@ h1 {
 }
 
 #mediawalls {
-  /*position: relative;*/
   max-width: 980px;
-  display: block;
+  min-width: 768px;
+  display: flex;
+  flex-direction: row;
   margin: 0 auto;
+  position: relative;
+}
+
+#mediawalls > div {
+  -webkit-transition: width .3s; /* For Safari 3.1 to 6.0 */
+  transition: width .3s;
+
 }
 
 #mediawall-highest {
-  float: left;
-  width: 30%;
-  min-width: 300px;
+/*  width: 300px;
+  min-width: 300px;*/
+  height: 455px;
+  flex: 1;
+  width: 300px;
+  height: 353px;
+  overflow: hidden;
+}
+
+#mediawall-highest [data-lf-package~="streamhub-wall#3.1.5"] .streamhub-media-wall-view .hub-wall-column {
+  height: 327px;
+  overflow: hidden;
+}
+
+#mediawall-highest [data-lf-package~="streamhub-wall#3.1.5"] .hub-list article.content {
+  height: 334px;
+  border: none;
+  overflow: hidden;
 }
 
 #mediawall-contestants {
-  width: 65%;
-  float: right;
-  min-width: 468px;
+  flex: 2;
+  /*min-width: 468px;*/
+}
+
+#mediawalls.stuck #mediawall-highest {
+  position: fixed;
+  top: 0;
+  width: 328px;
+}
+
+#mediawalls.stuck #mediawall-contestants {
+  margin-left: 328px;
 }
