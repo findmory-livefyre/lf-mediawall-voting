@@ -1,28 +1,38 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title></title>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  	<link rel="stylesheet" href="styles.css"/>
-	</head>
-	<body>
-		<h1>The highest rated Dingo is...</h1>
-		<div id="container" >
-			<div id="highest"></div>
-		</div>
-		<h1>Vote for your favorite Dingo</h1>
-		<button id="auth-button">Log in</button>
-		<div id="upload-button"></div>
-		<div id="wall"></div>
-		<!-- Livefyre.js ; script loader to rule them all -->
-		<script src='http://cdn.livefyre.com/Livefyre.js'></script>
-		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css"/>
+  </head>
+  <body>
+      <div id="wrapper">
+        <div id="header-placeholder">
+          <button id="auth-button">Log in</button>
+          <div id="upload-button"></div>
+        </div>
 
-		<!-- add Client Solutions network LFEP -->
-		<script src="http://client-solutions.ep.livefyre.com/media/Y2xpZW50LXNvbHV0aW9ucy5lcC5saXZlZnlyZS5jb20=/javascripts/customprofiles.js">
-		</script>
-		<script src="main.js"></script>
-	</body>
+        <div id="mediawalls">
+          <div id="mediawall-highest">
+            <h1>The highest rated Dingo is...</h1>
+            <div id="highest"></div>
+          </div>
+          <div id="mediawall-contestants">
+            <h1>Vote for your favorite Dingo</h1>
+            <div id="wall"></div>
+          </div>
+        </div>
+      </div>
+
+    <!-- Livefyre.js ; script loader to rule them all -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src='http://cdn.livefyre.com/Livefyre.js'></script>
+
+    <!-- add Client Solutions network LFEP -->
+    <script src="http://client-solutions.ep.livefyre.com/media/Y2xpZW50LXNvbHV0aW9ucy5lcC5saXZlZnlyZS5jb20=/javascripts/customprofiles.js">
+    </script>
+    <script src="main.js"></script>
+  </body>
 </html>
