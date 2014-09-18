@@ -94,6 +94,10 @@
       collection.createUpdater().pipe(itemsWithImages()).pipe(wall);
       collection.createArchive().pipe(itemsWithImages()).pipe(wall.more);
 
+    // widget.on('commentLiked', function (data) {
+    //     console.log(data);
+    // });
+
   });
 
 }(Livefyre));
