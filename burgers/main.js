@@ -38,7 +38,9 @@
       //get the most upvoted item
       higestRated = new LiveMediaWall({
         el:document.getElementById('highest'),
-        columns:1
+        columns:1,
+        initial: 1,
+        minContentWidth: 400
       });
 
       //get most liked content from bootstrap
@@ -101,3 +103,15 @@
   });
 
 }(Livefyre));
+
+$(function () {
+  $("#mediawall-highest").stick_in_parent().on("sticky_kit:stick", function(e) {
+    var $el = $(e.target);
+    console.log("has stuck!", e.target);
+    $el.parent().css({
+      'position': 'fixed',
+      'top': 360
+    });
+
+  });
+}());

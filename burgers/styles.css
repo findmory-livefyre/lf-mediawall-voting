@@ -18,6 +18,7 @@
 h1 {
   text-align: center;
   font-family: sans-serif;
+  height: 2em;
 }
 
 .content-body-main{
@@ -32,8 +33,28 @@ h1 {
 #header-placeholder {
   width: 100%;
   max-width: 980px;
+  min-width: 768px;
   height: 300px;
   display: block;
   margin: 0 auto;
   background-color: #ccc;
+}
+
+#mediawalls {
+  /*position: relative;*/
+  max-width: 980px;
+  display: block;
+  margin: 0 auto;
+}
+
+#mediawall-highest {
+  float: left;
+  width: 30%;
+  min-width: 300px;
+}
+
+#mediawall-contestants {
+  width: 65%;
+  float: right;
+  min-width: 468px;
 }
